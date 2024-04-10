@@ -21,14 +21,12 @@ const CouplePage = () => {
         dispatch(selectKnight(knight));
     }
 
-    const handleCreateCouple = () => {
-        if (selectedDragon && selectedKnight) {
-            dispatch(addCouple(selectedDragon, selectedKnight));
-        }
+    const isAvailable = (entity) => {
+        return entity.available;
     }
 
-    const isInCouple = (entity, couples) => {
-        return couples.some(couple => couple.dragon.id === entity.id || couple.knight.id === entity.id);
+    const handleAddCouple = () => {
+        dispatch(addCouple())
     }
 
     return (
@@ -47,7 +45,7 @@ const CouplePage = () => {
                                     <span>{dragon.name}</span>
                                     <button 
                                         onClick={() => handleSelectDragon(dragon)}
-                                        disabled={isInCouple(dragon, couples)}
+                                        disabled={!isAvailable(dragon)}
                                     >Select</button>
                                 </div>
                             )
@@ -64,7 +62,7 @@ const CouplePage = () => {
                                     <span>{knight.age}</span>
                                     <button 
                                         onClick={() => handleSelectKnight(knight)}
-                                        disabled={isInCouple(knight, couples)}
+                                        disabled={!isAvailable(knight)}
                                     >Select</button>
                                 </div>
                             )
@@ -86,7 +84,7 @@ const CouplePage = () => {
                     }
                 </div>
                 {error !== "" && <p style={{color: "red"}}>{error}</p>}
-                <button onClick={handleCreateCouple}>Link</button>
+                <button onClick={handleAddCouple}>Link</button>
             </div>
         </div>
     );

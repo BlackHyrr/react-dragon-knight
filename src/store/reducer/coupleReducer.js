@@ -14,25 +14,32 @@ const coupleReducer = (state = initialState, action) => {
         case COUPLE_SET_DRAGON:
             return {
                 ...state,
-                selectedDragon: action.payload,
+                selectedDragon: {...action.payload, available: true},
                 error: ''
             }
 
         case COUPLE_SET_KNIGHT:
             return {
                 ...state,
-                selectedKnight: action.payload,
+                selectedKnight: {...action.payload, available: true},
                 error: ''
             }
 
         case COUPLE_ADD:
-            return {
-                ...state,
-                selectedDragon: null,
-                selectedKnight: null,
-                couples: [...state.couples, {id: state.id, dragon: state.selectedDragon, knight: state.selectedKnight}],
-                id: state.id + 1,
-                error: ''
+            if (state.selectedDragon && state.selectedKnight) {
+                return {
+                    ...state,
+                    selectedDragon: null,
+                    selectedKnight: null,
+                    couples: [...state.couples, {id: state.id, dragon: state.selectedDragon, knight: state.selectedKnight}],
+                    id: state.id + 1,
+                    error: ''
+                }
+            } else {
+                return {
+                    ...state,
+                    error: 'You must select a dragon and a knight before creating a couple.'
+                }
             }
 
         case COUPLE_SET_ERROR:

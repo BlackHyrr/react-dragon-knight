@@ -3,28 +3,23 @@ import dragonReducer from "./reducer/dragonReducer.js";
 import knightReducer from "./reducer/knightReducer.js";
 import {composeWithDevTools} from "redux-devtools-extension";
 import coupleReducer from "./reducer/coupleReducer.js";
-import { COUPLE_ADD, COUPLE_SET_ERROR } from "./constant/action-type.js";
+import { COUPLE_ADD, DRAGON_SET_UNAVAILABLE, KNIGHT_SET_UNAVAILABLE } from "./constant/action-type.js";
 
 
-/* const addCoupleMiddleware = (store) => (next) => (action) => {
-    if (action.type !== COUPLE_ADD) {
-        return next(action)
+const coupleMiddleware = store => next => action => {
+    if (action.type === COUPLE_ADD) {
+
+        const { selectedDragon, selectedKnight } = store.getState().coupleReducer;
+
+        console.log(store.getState())
+        if (selectedDragon && selectedKnight) {
+            store.dispatch({ type: DRAGON_SET_UNAVAILABLE, payload: selectedDragon.id });
+            store.dispatch({ type: KNIGHT_SET_UNAVAILABLE, payload: selectedKnight.id });
+        }
     }
-    if(dragon === null || knight === null) {
-        store.dispatch({
-            type: COUPLE_SET_ERROR,
-            payload: 'You must select a dragon and a knight before creating a couple.'
-        });
-        return;
-    }
-    
-    store.dispatch({
-        type: COUPLE_ADD,
-        payload: { dragon, knight }
-    });
 
-    next(action)
-} */
+    next(action);
+};
 
 const store = createStore(
     combineReducers({
@@ -32,7 +27,7 @@ const store = createStore(
         knightReducer: knightReducer,
         coupleReducer: coupleReducer
     }),
-    composeWithDevTools(applyMiddleware(addCoupleMiddleware),)
+    composeWithDevTools(applyMiddleware(coupleMiddleware))
 )
 
 
