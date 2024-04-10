@@ -1,0 +1,94 @@
+#root {
+  max-width: 1280px;
+}
+
+button:active, button:focus {
+  outline: none;
+}
+
+.active {
+  color: orange;
+}
+
+.mainPage {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding: 1rem;
+  .headerPage {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: baseline;
+    gap: 5px;
+    width: 100%;
+    margin-bottom: 5px;
+    border-bottom: 1px solid black;
+
+    h1 {
+      font-size: 1.5rem;
+    }
+    p {
+      font-size: .7rem;
+      color: #888888;
+    }
+  } //header
+
+  #content {
+    display: flex;
+    gap: 15px;
+
+    #inputGroup {
+      width: 100%;
+
+      input {
+        height: 25px;
+        font-size: 1.2rem;
+        margin-bottom: 7px;
+      } // input
+
+      button {
+        height: 30px;
+        padding: 3px 5px;
+        width: 100%;
+        background-color: #747bff;
+        transition: background-color .3s;
+
+        &:hover {
+          background-color: #535bf2;
+        }
+        &:active, &:focus {
+          outline: none;
+        }
+      } // button
+    } // #inputGroup
+
+    #list {
+      width: 90%;
+
+      div {
+        width: 100%;
+        padding: 5px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        span {
+          text-transform: uppercase;
+        }
+
+        button {
+          background-color: darkred;
+          transition: background-color .3s;
+          scale: .5;
+
+          &:hover {
+            background-color: red;
+            border-color: transparent;
+          } // &:hover
+        } // button
+      }// div
+
+    }// #list
+  }// #content
+}//main
